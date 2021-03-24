@@ -1,0 +1,54 @@
+# Project 3
+
+# Tony Maldonado-Perez
+# amaldo36@uic.edu
+
+# I hereby attest that I have adhered to the rules for quizzes and projects as well as UIC's
+# Academic Integrity standards. Signed: Anthony Maldonado-Perez
+
+#Function 1
+def func_1(data):
+    f = open("t_data.txt", "r")
+    lines = f.read().split("\n")[1:]
+    # I skipped the first collum of the file because we do not that information
+    average = dict()
+    # empty dictionary
+    for line in lines:
+        key = line[:37]
+        value = line[37+13:-6].split()
+        # I added the key value pairs in the dictionary
+        average[key] = value
+    return average
+
+#Function 2
+
+from statistics import mean
+
+def func_2(data):
+    func1 = func_1("t_data.txt")
+    # I have to call func_1 since it will return the dictionary created for the city and values
+    new_dict = dict()
+    for key, value in func1.items():
+        value = mean(list(map(int, value)))
+        new_dict[key] = value
+        # I converted strings to int to find the mean using mean from the statistic module
+    return new_dict
+
+# Function 3
+
+def func_3(data,output):
+    func2 = func_2("t_data.txt")
+    # t_data.txt from the file we have been working on
+    f = open("output.txt","w")
+    # output.txt with "w" in order to add to the file we have not worked on yet
+    files = ("{:40}{:15}".format("City","Average"))
+    f.write(files+"\n")
+    # key values from function 2
+    for i in func2:
+        files = ("{:40}{:15}".format(i,func2[i]))
+        f.write(files+"\n")
+    f.close()
+    # Close the file
+print(func_2("t_data.txt"))
+func_3("t_data.txt","output.txt")
+
